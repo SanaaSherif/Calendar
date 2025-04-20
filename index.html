@@ -2,76 +2,110 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Calendar Widget</title>
+  <title>Responsive Calendar</title>
   <style>
     * {
       box-sizing: border-box;
       overflow: hidden;
     }
-    body {
-      font-family: sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: baseline;
-      background-color: black;
-      
-    }
-    .calendar {
-      width: 100vw;
+
+    html, body {
       height: 100vh;
-      background: white;
-      border-radius: 6vw;
-      overflow: hidden;
+      background: #f4f4f4;
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
     }
+
+    body {
+      display: flex;
+      justify-content: end;
+      align-items: baseline;
+    }
+
+    .calendar {
+      height: 100vh;
+      aspect-ratio: 3.61 / 4;
+      background: white;
+      border-radius: 3.1vh;
+      overflow: hidden;
+      box-shadow: 0 0.5vh 2vh rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+    }
+
     .calendar-header {
       background: #F4ABBA;
       color: white;
-      padding: 4vw;
+      padding: 4.4vh 4vh;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
+
     .calendar-header button {
       background: none;
       border: none;
       color: white;
-      font-size: 5vw;
       cursor: pointer;
-    }
-    .calendar-header h2 {
-      margin: 0;
-      font-size: 5vw;
-      
-    }
-    .calendar-body {
-      padding: 7vw 3vw;
-      height: 100vh;
-      width: 100vw;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
 
     }
+
+    .calendar-header svg {
+      width: 5vh;
+      height: 5vh;
+    }
+
+    .calendar-header h2 {
+      margin: 0;
+      font-size: 4.2vh;
+    }
+
+    .calendar-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 2vh;
+    }
+
     .day-names, .days {
       display: grid;
       grid-template-columns: repeat(7, 1fr);
       text-align: center;
     }
+
     .day-names div {
       font-weight: bold;
       color: rgb(39, 39, 39);
-      margin-bottom: 2vh;
+      font-size: 3.9vh;
+      margin-bottom: 1vh;
+      padding-top: 5.1vh;
+      padding-bottom: 5.8vh;
     }
+
+    .days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-auto-rows: 10vh; /* Or any height you like */
+  gap: 1vh;
+}
+
+
     .days div {
-      padding: 4vw;
-      margin: 0.2vw 0;
+      padding: 2.5vh;
       border-radius: 10%;
       cursor: pointer;
+      font-size: 4vh;
     }
+
     .days div:hover {
       background: #ffe5ee;
     }
-    .days {
-      color: #5c5c5c;
-      font-size: 3,5vw;
-    }
+
     .today {
       background: #f72672;
       color: white;
@@ -81,9 +115,21 @@
 <body>
   <div class="calendar">
     <div class="calendar-header">
-      <button id="prev">&#10094;</button>
+      <button id="prev">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round"
+             stroke-linejoin="round" style="transform: rotate(180deg);">
+          <path d="m9 18 6-6-6-6"></path>
+        </svg>
+      </button>
       <h2 id="monthYear"></h2>
-      <button id="next">&#10095;</button>
+      <button id="next">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round"
+             stroke-linejoin="round">
+          <path d="m9 18 6-6-6-6"></path>
+        </svg>
+      </button>
     </div>
     <div class="calendar-body">
       <div class="day-names">
@@ -108,15 +154,14 @@
       const firstDay = new Date(year, month, 1);
       const lastDay = new Date(year, month + 1, 0);
 
-      let startDay = firstDay.getDay(); // Sunday = 0
-      startDay = startDay === 0 ? 6 : startDay - 1; // Convert to Monday start
+      let startDay = firstDay.getDay();
+      startDay = startDay === 0 ? 6 : startDay - 1;
 
       const totalDays = lastDay.getDate();
 
       monthYear.innerText = `${date.toLocaleString('default', { month: 'long' })} ${year}`;
       daysContainer.innerHTML = '';
 
-      // Add blank divs before first day of the month
       for (let i = 0; i < startDay; i++) {
         const blank = document.createElement('div');
         daysContainer.appendChild(blank);
@@ -146,7 +191,6 @@
       renderCalendar();
     });
 
-    // Auto-update at midnight
     setInterval(() => {
       const now = new Date();
       if (now.getDate() !== date.getDate() || now.getMonth() !== date.getMonth()) {

@@ -7,16 +7,21 @@
     * {
       box-sizing: border-box;
     }
-    body {
+    html, body {
+      margin: 0;
+      padding: 0;
       font-family: sans-serif;
+    }
+    body {
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      height: 100%;
       background: #f4f4f4;
     }
     .calendar {
-      width: 300px;
+      width: 100%;
+      max-width: 300px;
       background: white;
       border-radius: 20px;
       overflow: hidden;
@@ -25,7 +30,7 @@
     .calendar-header {
       background: #F4ABBA;
       color: white;
-      padding: 15px;
+      padding: 1em;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -34,17 +39,15 @@
       background: none;
       border: none;
       color: white;
-      font-size: 18px;
+      font-size: 1.2em;
       cursor: pointer;
     }
     .calendar-header h2 {
       margin: 0;
-      font-size: 16px;
-      
+      font-size: 1em;
     }
     .calendar-body {
-      padding: 10px;
- 
+      padding: 1em;
     }
     .day-names, .days {
       display: grid;
@@ -55,11 +58,13 @@
       font-weight: bold;
       color: rgb(39, 39, 39);
       margin-bottom: 10px;
+      font-size: 0.8em;
     }
     .days div {
-      padding: 10px;
-      margin: 2px 0;
+      padding: 0.5em;
+      margin: 0.2em 0;
       border-radius: 50%;
+      font-size: 0.9em;
       cursor: pointer;
     }
     .days div:hover {
@@ -68,6 +73,17 @@
     .today {
       background: #f72672;
       color: white;
+    }
+
+    /* Responsive fallback for tiny containers */
+    @media (max-width: 200px) {
+      .calendar-header h2 {
+        font-size: 0.9em;
+      }
+      .days div {
+        font-size: 0.7em;
+        padding: 0.4em;
+      }
     }
   </style>
 </head>

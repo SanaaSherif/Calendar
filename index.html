@@ -6,26 +6,33 @@
 <style>
   * {
     box-sizing: border-box;
+    scrollbar-width: none; /* Firefox */
   }
-  body {
+  *::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Edge */
+  }
+  html, body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Prevent scrollbars on body */
     font-family: sans-serif;
+    background: #f4f4f4;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    background: #f4f4f4;
   }
   .calendar {
-    width: 200px; /* Reduced from 300px */
-    background: white;
+    width: 180px; /* Even smaller */
+    background: transparent; /* Transparent background */
     border-radius: 15px;
-    overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    overflow: hidden; /* Hide internal scrollbars */
+    box-shadow: none; /* Optional: remove shadow for transparency */
   }
   .calendar-header {
     background: #F4ABBA;
     color: white;
-    padding: 10px; /* Reduced */
+    padding: 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -34,15 +41,15 @@
     background: none;
     border: none;
     color: white;
-    font-size: 14px; /* Reduced */
+    font-size: 14px;
     cursor: pointer;
   }
   .calendar-header h2 {
     margin: 0;
-    font-size: 14px; /* Reduced */
+    font-size: 14px;
   }
   .calendar-body {
-    padding: 8px; /* Reduced */
+    padding: 6px;
   }
   .day-names, .days {
     display: grid;
@@ -51,14 +58,14 @@
   }
   .day-names div {
     font-weight: bold;
-    font-size: 12px; /* Reduced */
+    font-size: 10px;
     color: rgb(39, 39, 39);
-    margin-bottom: 6px;
+    margin-bottom: 4px;
   }
   .days div {
-    padding: 6px; /* Reduced */
+    padding: 5px;
     margin: 1px 0;
-    font-size: 12px; /* Reduced */
+    font-size: 10px;
     border-radius: 50%;
     cursor: pointer;
   }

@@ -7,14 +7,13 @@
   <style>
     * {
       box-sizing: border-box;
-      margin: 0;
-      padding: 0;
     }
 
     html, body {
-      width: 100%;
       height: 100%;
-      font-family: sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
       overflow: hidden;
     }
 
@@ -22,29 +21,29 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 2%;
+      padding: 1%;
     }
 
     .calendar {
       width: 100%;
-      height: 100%;
-      max-width: 450px;
-      max-height: 600px;
+      max-width: 500px;
+      max-height: 100%;
       background: white;
-      border-radius: 20px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      border-radius: min(3vh, 15px);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
       display: flex;
       flex-direction: column;
+      overflow: hidden;
     }
 
     .calendar-header {
       background: #EECBBF;
       color: white;
-      padding: 6% 5%;
+      padding: clamp(12px, 3vh, 25px) clamp(15px, 4vh, 30px);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-radius: 20px 20px 0 0;
+      flex-shrink: 0;
     }
 
     .calendar-header button {
@@ -60,26 +59,27 @@
     }
 
     .calendar-header button:hover {
-      opacity: 0.7;
+      opacity: 0.8;
     }
 
     .calendar-header svg {
-      width: clamp(24px, 8%, 40px);
-      height: clamp(24px, 8%, 40px);
+      width: clamp(20px, 5vh, 35px);
+      height: clamp(20px, 5vh, 35px);
     }
 
     .calendar-header h2 {
       margin: 0;
-      font-size: clamp(18px, 5vw, 28px);
+      font-size: clamp(18px, 3.5vh, 28px);
       cursor: pointer;
-      white-space: nowrap;
+      font-weight: 600;
+      user-select: none;
     }
 
     .calendar-body {
       flex: 1;
       display: flex;
       flex-direction: column;
-      padding: 3%;
+      padding: clamp(10px, 2vh, 20px);
       min-height: 0;
     }
 
@@ -88,21 +88,23 @@
       grid-template-columns: repeat(7, 1fr);
       text-align: center;
       color: #7D7D7D;
-      margin-bottom: 2%;
+      margin-bottom: clamp(8px, 1.5vh, 15px);
+      flex-shrink: 0;
     }
 
     .day-names div {
-      font-weight: bold;
-      font-size: clamp(14px, 3.5vw, 22px);
-      padding: 8% 0;
+      font-weight: 700;
+      font-size: clamp(14px, 2.5vh, 20px);
+      padding: clamp(8px, 1.5vh, 12px) 0;
     }
 
     .days {
       display: grid;
       grid-template-columns: repeat(7, 1fr);
       grid-auto-rows: 1fr;
-      gap: 1.5%;
+      gap: clamp(4px, 0.8vh, 10px);
       flex: 1;
+      min-height: 0;
     }
 
     .days div {
@@ -111,8 +113,9 @@
       justify-content: center;
       border-radius: 10%;
       cursor: pointer;
-      font-size: clamp(14px, 3.5vw, 22px);
+      font-size: clamp(14px, 3vh, 22px);
       transition: background 0.2s;
+      aspect-ratio: 1;
     }
 
     .days div:hover {
@@ -122,24 +125,20 @@
     .today {
       background: #EECBBF;
       color: white;
+      font-weight: 600;
     }
 
     .special-day {
       animation: rock 1s infinite ease-in-out;
-      filter: drop-shadow(0 0 4px #F9E0D7) drop-shadow(0 0 6px #F9E0D7);
+      filter: drop-shadow(0 0 1vh #F9E0D7) drop-shadow(0 0 1.5vh #F9E0D7);
     }
  
     .days div svg {
       display: block;
-      width: 80%;
-      height: 80%;
-      max-width: 100%;
-      max-height: 100%;
-    }
-
-    .special-day svg {
       width: 70%;
       height: 70%;
+      max-width: 100%;
+      max-height: 100%;
     }
 
     @keyframes rock {
@@ -149,26 +148,42 @@
     }
 
     @media (prefers-color-scheme: dark) {
-      .calendar { background: #2F2F2F; }
-      .day-names, .days { color: rgb(224, 224, 224);}
-      .today {color: #2F2F2F; background: #EECBBF;}
-      .calendar-header {color: #2F2F2F; }
-      .calendar-header button { color: #2F2F2F;}
+      body {
+        background: #1a1a1a;
+      }
+      .calendar { 
+        background: #2F2F2F;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      }
+      .day-names, .days { 
+        color: rgb(224, 224, 224);
+      }
+      .today {
+        color: #2F2F2F;
+        background: #EECBBF;
+      }
+      .calendar-header {
+        color: #2F2F2F;
+      }
+      .calendar-header button { 
+        color: #2F2F2F;
+      }
       .days div:hover {
         background: #F8EBE7;
-        color:#2F2F2F;
+        color: #2F2F2F;
       }
     }
 
-    @media (max-width: 400px) {
-      .calendar-header h2 {
-        font-size: 16px;
+    /* Responsive adjustments */
+    @media (max-height: 400px) {
+      .calendar-header {
+        padding: 8px 12px;
       }
-      .day-names div {
-        font-size: 12px;
+      .calendar-body {
+        padding: 8px;
       }
-      .days div {
-        font-size: 12px;
+      .day-names {
+        margin-bottom: 4px;
       }
     }
   </style>
@@ -176,7 +191,7 @@
 <body>
   <div class="calendar">
     <div class="calendar-header">
-      <button id="prev">
+      <button id="prev" aria-label="Previous month">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
              stroke="currentColor" stroke-width="2" stroke-linecap="round"
              stroke-linejoin="round" style="transform: rotate(180deg);">
@@ -184,7 +199,7 @@
         </svg>
       </button>
       <h2 id="monthYear"></h2>
-      <button id="next">
+      <button id="next" aria-label="Next month">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
              stroke="currentColor" stroke-width="2" stroke-linecap="round"
              stroke-linejoin="round">
@@ -207,20 +222,26 @@
     const nextBtn = document.getElementById('next');
 
     let date = new Date();
-    let flowerData = {};
 
     function getStorageKey() {
       return `flowers-${date.getFullYear()}-${date.getMonth()}`;
     }
 
     function getSpecialDays() {
-      const key = getStorageKey();
-      return flowerData[key] || [];
+      try {
+        const stored = localStorage.getItem(getStorageKey());
+        return stored ? JSON.parse(stored) : [];
+      } catch (e) {
+        return [];
+      }
     }
 
     function saveSpecialDays(days) {
-      const key = getStorageKey();
-      flowerData[key] = days;
+      try {
+        localStorage.setItem(getStorageKey(), JSON.stringify(days));
+      } catch (e) {
+        console.error('Failed to save special days:', e);
+      }
     }
 
     function toggleFlower(day) {
@@ -248,25 +269,27 @@
       const totalDays = lastDay.getDate();
       const specialDays = getSpecialDays();
 
-      monthYear.innerText = `${date.toLocaleString('default', { month: 'long' })} ${year}`;
+      monthYear.textContent = `${date.toLocaleString('default', { month: 'long' })} ${year}`;
       daysContainer.innerHTML = '';
 
       for (let i = 0; i < startDay; i++) {
         const blank = document.createElement('div');
+        blank.style.cursor = 'default';
         daysContainer.appendChild(blank);
       }
 
       for (let day = 1; day <= totalDays; day++) {
         const dayDiv = document.createElement('div');
+        dayDiv.setAttribute('data-day', day);
 
         if (specialDays.includes(day)) {
-          dayDiv.innerHTML = `<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 433.6 418.5">
-  <path d="M214.7,19.6c.8.5,2.9.5,3.7,0,1.5-.9,6.6-16,11.8-18.7s18.1,3,23.3,5.4c39.7,18.2,60,68.2,41,108.5,30.6-29.7,80-27.3,111,.5s17.2,18.3,17,24.1-17.2,17.6-14,21.4,18.8,1.8,22.5,6c3.4,3.7,2.6,12.6,2.3,17.4-3.3,46.2-44.3,85.1-91.9,77.6l14.5,10c33.3,25.6,36.4,88.8,6.5,117.5-7.9,7.6-19.2-5.3-28-5.5-1.8,7.3,5.1,23.5-2.7,27.8s-11.4,4.1-14.2,4.8c-44.2,9.9-93-16.2-100-62.5-2.7-.2-1.6,0-2,1.5-10.5,46.4-54.2,70.4-100.1,61-4.2-.8-15.5-4-17.2-7.8-3-6.6,2.3-17.7.3-24.8-2-1.4-18.1,9.4-24.2,7.8s-9.5-10.1-11.6-13.5c-20.4-33.8-15.9-78.2,13.3-105.3l15.5-11c-40.1,6.5-79.7-23.1-88.9-61.6s-3.9-27.2-1.6-32.4,23.7-5,24.5-8.5-14.9-14.9-14.9-21,12.6-19,15.9-22c31.1-28.8,80-30.9,112-2.5-17.7-38.4,0-84.4,35.7-104.8S195.7-1.5,201.5.3s10.1,17.6,13.2,19.4Z" style="fill: #C4A5E8 ;"/>
-  <path d="M224.6,178.8c10.9,1.9,19.4,9.3,25.6,18,.9.3,15.9-4.6,17.3-5.4,2.7-1.8,2.7-5.2,4.4-7.1,10.1-12,29.9-2.8,27.5,12.9-1.1,6.7-8.7,12.8-15.3,12.8s-9.3-4.2-11.7-3.9-16.8,5-17.3,5.8c-1,1.6-.3,9.8-.9,13.1s-2,6-3,8c-1.9,3.6-6.7,7.2-5,10.9s9.2,12.6,9.9,13.1c3,2.1,9.7.7,14,6,14.4,17.3-14,37.7-25.3,18.3-4.1-7-.2-10.9-1.5-15.4s-9.8-14.1-10.6-14.5c-1.4-.7-8.1,2.2-10.6,2.5s-7.1.4-9.9.1-10.3-3-10.8-2.9c-1,.2-11.1,14.2-11.5,15.6-1.1,4.8,3.2,8.2-2.2,15.7-14.8,20.9-42.1-10.8-19.7-22.7,3.9-2.1,8-1.2,9.5-2s10.2-14.4,10.2-15.4c.2-2-6.2-10.7-7.3-14.6s-.8-12.1-1.8-15.2-15.7-6.3-17.5-6.4c-6-.2-8.8,7.8-20,1-13.7-8.4-5.8-31.2,12-28,9.4,1.7,8.8,9.2,12.8,12.2s15.6,5.5,16.5,5.5c2.3-.1,8.3-9.1,11.5-11.4s10.1-5,14.8-6.7c.5-.8.5-17.6.1-19.4s-5.5-4.7-6.6-8.4c-6.9-23.5,28.2-29,30.3-7.2,1,10.7-6.9,12.1-7.8,16.7s.6,12.9,0,18.4Z" style="fill: #fefefe;"/>
+          dayDiv.innerHTML = `<svg viewBox="0 0 433.6 418.5" xmlns="http://www.w3.org/2000/svg">
+  <path d="M214.7,19.6c.8.5,2.9.5,3.7,0,1.5-.9,6.6-16,11.8-18.7s18.1,3,23.3,5.4c39.7,18.2,60,68.2,41,108.5,30.6-29.7,80-27.3,111,.5s17.2,18.3,17,24.1-17.2,17.6-14,21.4,18.8,1.8,22.5,6c3.4,3.7,2.6,12.6,2.3,17.4-3.3,46.2-44.3,85.1-91.9,77.6l14.5,10c33.3,25.6,36.4,88.8,6.5,117.5-7.9,7.6-19.2-5.3-28-5.5-1.8,7.3,5.1,23.5-2.7,27.8s-11.4,4.1-14.2,4.8c-44.2,9.9-93-16.2-100-62.5-2.7-.2-1.6,0-2,1.5-10.5,46.4-54.2,70.4-100.1,61-4.2-.8-15.5-4-17.2-7.8-3-6.6,2.3-17.7.3-24.8-2-1.4-18.1,9.4-24.2,7.8s-9.5-10.1-11.6-13.5c-20.4-33.8-15.9-78.2,13.3-105.3l15.5-11c-40.1,6.5-79.7-23.1-88.9-61.6s-3.9-27.2-1.6-32.4,23.7-5,24.5-8.5-14.9-14.9-14.9-21,12.6-19,15.9-22c31.1-28.8,80-30.9,112-2.5-17.7-38.4,0-84.4,35.7-104.8S195.7-1.5,201.5.3s10.1,17.6,13.2,19.4Z" fill="#C4A5E8"/>
+  <path d="M224.6,178.8c10.9,1.9,19.4,9.3,25.6,18,.9.3,15.9-4.6,17.3-5.4,2.7-1.8,2.7-5.2,4.4-7.1,10.1-12,29.9-2.8,27.5,12.9-1.1,6.7-8.7,12.8-15.3,12.8s-9.3-4.2-11.7-3.9-16.8,5-17.3,5.8c-1,1.6-.3,9.8-.9,13.1s-2,6-3,8c-1.9,3.6-6.7,7.2-5,10.9s9.2,12.6,9.9,13.1c3,2.1,9.7.7,14,6,14.4,17.3-14,37.7-25.3,18.3-4.1-7-.2-10.9-1.5-15.4s-9.8-14.1-10.6-14.5c-1.4-.7-8.1,2.2-10.6,2.5s-7.1.4-9.9.1-10.3-3-10.8-2.9c-1,.2-11.1,14.2-11.5,15.6-1.1,4.8,3.2,8.2-2.2,15.7-14.8,20.9-42.1-10.8-19.7-22.7,3.9-2.1,8-1.2,9.5-2s10.2-14.4,10.2-15.4c.2-2-6.2-10.7-7.3-14.6s-.8-12.1-1.8-15.2-15.7-6.3-17.5-6.4c-6-.2-8.8,7.8-20,1-13.7-8.4-5.8-31.2,12-28,9.4,1.7,8.8,9.2,12.8,12.2s15.6,5.5,16.5,5.5c2.3-.1,8.3-9.1,11.5-11.4s10.1-5,14.8-6.7c.5-.8.5-17.6.1-19.4s-5.5-4.7-6.6-8.4c-6.9-23.5,28.2-29,30.3-7.2,1,10.7-6.9,12.1-7.8,16.7s.6,12.9,0,18.4Z" fill="#fefefe"/>
 </svg>`;
           dayDiv.classList.add('special-day');
         } else {
-          dayDiv.innerText = day;
+          dayDiv.textContent = day;
         }
 
         if (
@@ -302,6 +325,7 @@
       }
     });
 
+    // Update calendar at midnight
     setInterval(() => {
       const now = new Date();
       if (now.getDate() !== date.getDate() || now.getMonth() !== date.getMonth()) {
